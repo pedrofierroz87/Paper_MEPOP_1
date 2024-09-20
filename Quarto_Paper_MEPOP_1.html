@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Fierro">
+
+<title>Paper_MEPOP_1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Quarto_Paper_MEPOP_1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Quarto_Paper_MEPOP_1_files/libs/quarto-html/quarto.js"></script>
+<script src="Quarto_Paper_MEPOP_1_files/libs/quarto-html/popper.min.js"></script>
+<script src="Quarto_Paper_MEPOP_1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Quarto_Paper_MEPOP_1_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Quarto_Paper_MEPOP_1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Quarto_Paper_MEPOP_1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Quarto_Paper_MEPOP_1_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Quarto_Paper_MEPOP_1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Quarto_Paper_MEPOP_1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Paper_MEPOP_1</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Pedro Fierro </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="the-impact-of-political-campaigns-on-affection-the-case-of-the-first-chilean-constitutional-process-2022" class="level1">
+<h1>The Impact of Political Campaigns on Affection: The Case of the First Chilean Constitutional Process (2022)</h1>
+<p>Authors: Pedro Fierro, Claudia Ramírez, Andrés Sherman, Sebastián Rivera y Magdalena Saldaña</p>
+<p>† Este documento es para compartir ideas y tener acceso al código que estamos ocupando.</p>
+<section id="environment" class="level2">
+<h2 class="anchored" data-anchor-id="environment">Environment</h2>
+<section id="preparing-our-environment-loading-libraries." class="level3">
+<h3 class="anchored" data-anchor-id="preparing-our-environment-loading-libraries.">Preparing our environment (loading libraries).</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plm)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="cross-sectional-approach" class="level2">
+<h2 class="anchored" data-anchor-id="cross-sectional-approach">Cross-Sectional Approach</h2>
+<section id="importing-data-and-creating-variables" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data-and-creating-variables">Importing data and creating variables</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import Data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data_w1 <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"Data_W1.sav"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ID</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>id <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>CodPanelista</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Age</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>age_num <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>age</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Socioeconomic Status</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>ses <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>RECO_NSE</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Education</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>educ <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P60</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex (1=women)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>data_w1 <span class="ot">&lt;-</span> data_w1<span class="sc">%&gt;%</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">ifelse</span>(SEX <span class="sc">==</span> <span class="dv">2</span>, <span class="dv">1</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(SEX <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, <span class="cn">NA</span>)))</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Ideology</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>ideology <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w1<span class="sc">$</span>P32 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w1<span class="sc">$</span>P32)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Online Political Efficacy</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>ope1 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P59_1</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>ope2 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P59_2</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>ope3 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P59_3</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>ope4 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P59_4</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># External Political Efficacy (recode)</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>extef1 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P58_1</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>extef2 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P58_2</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>extef3 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P58_3</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co"># To recode efficacies (intef1, intef3, extef1, extef3, extef4)</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>data_w1 <span class="ot">&lt;-</span> data_w1 <span class="sc">%&gt;%</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(extef1, extef2, extef3), <span class="sc">~</span> <span class="dv">6</span> <span class="sc">-</span> .x))</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Internal Political Efficacy</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>intef1 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P58_4</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>intef2 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P58_5</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>intef3 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P58_6</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Media Exposure</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>tv <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P4_1</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>cable <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P4_2</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>newspaper <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P4_3</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>radio <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P4_4</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>tradonline <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P4_5</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>online <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P4_6</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>podcast <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P4_7</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>officialsm <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P4_8</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Social Media Exposure</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>fb <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w1<span class="sc">$</span>P5_1 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w1<span class="sc">$</span>P5_1)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>insta <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w1<span class="sc">$</span>P5_2 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w1<span class="sc">$</span>P5_2)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>twitter <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w1<span class="sc">$</span>P5_3 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w1<span class="sc">$</span>P5_3)</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>whatsapp <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w1<span class="sc">$</span>P5_4 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w1<span class="sc">$</span>P5_4)</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>youtube <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w1<span class="sc">$</span>P5_5 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w1<span class="sc">$</span>P5_5)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>tiktok <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w1<span class="sc">$</span>P5_6 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w1<span class="sc">$</span>P5_6)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>discord <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w1<span class="sc">$</span>P5_7 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w1<span class="sc">$</span>P5_7)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>twitch <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w1<span class="sc">$</span>P5_8 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w1<span class="sc">$</span>P5_8)</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Franja Exposure</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>franja <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P6_1</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Social Media Political Use</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>use1 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P25_5</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>use2 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P25_6</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>use3 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P25_7</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>use4 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P25_8</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>use5 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P25_9</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>use6 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P25_10</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>use7 <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P25_11</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Interest</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>polint <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P21</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>procint <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P22</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>data_w1<span class="sc">$</span>plebint <span class="ot">&lt;-</span> data_w1<span class="sc">$</span>P23</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="checking-the-new-variables" class="level3">
+<h3 class="anchored" data-anchor-id="checking-the-new-variables">Checking the new variables</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(data_w1<span class="sc">$</span>age_num)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   vars    n  mean    sd median trimmed   mad min max range skew kurtosis   se
+X1    1 2117 44.26 14.78     42   43.83 16.31  18  84    66 0.27    -0.89 0.32</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>ses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+293 289 511 740 284 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>educ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5   6   7   8   9  10 
+  6  27 105 141 543 182 324 236 414 139 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>SEX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2 
+ 988 1129 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+ 988 1129 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>ideology)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  0   1   2   3   4   5   6   7   8   9  10 
+135  43  95 129 125 571  91 107  80  51 178 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>ope1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+590 352 687 268 220 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>ope2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+459 335 680 340 303 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>ope3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+338 265 689 439 386 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>ope4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+719 386 618 210 184 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>extef1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+914 384 478 170 171 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>extef2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2    3    4    5 
+1172  334  375  110  126 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>extef3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2    3    4    5 
+1003  309  476  154  175 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>intef1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+164 166 732 467 588 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>intef2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+244 242 671 469 491 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>intef3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+133 169 594 485 736 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>tv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+405 298 407 342 665 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>cable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+700 333 398 336 350 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>newspaper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2    3    4    5 
+1069  361  336  192  159 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>radio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+778 335 410 287 307 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>tradonline)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+757 371 427 314 248 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>online)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+891 351 361 266 248 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>podcast)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2    3    4    5 
+1307  288  256  163  103 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>officialsm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+615 273 445 337 447 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>fb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+494 272 358 300 622 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>insta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+539 279 325 287 503 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>twitter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+698 185 237 202 309 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>whatsapp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+636 276 347 247 583 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>youtube)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+728 300 317 283 399 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>tiktok)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+771 181 225 149 277 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>discord)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2    3    4    5 
+1025   66   80   41   28 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>twitch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+999  76  75  36  35 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>franja)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+661 451 442 255 308 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>polint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+533 243 539 430 372 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>procint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+386 186 403 447 695 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w1<span class="sc">$</span>plebint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+346 171 331 382 887 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="creating-factors" class="level2">
+<h2 class="anchored" data-anchor-id="creating-factors">Creating Factors</h2>
+<section id="reliability-test" class="level3">
+<h3 class="anchored" data-anchor-id="reliability-test">Reliability Test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>cronbach_ope <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_w1[<span class="fu">c</span>(<span class="st">"ope1"</span>, <span class="st">"ope2"</span>, <span class="st">"ope3"</span>, <span class="st">"ope4"</span>)]))</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>cronbach_ope</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>cronbach_intef <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_w1[<span class="fu">c</span>(<span class="st">"intef1"</span>, <span class="st">"intef2"</span>, <span class="st">"intef3"</span>)]))</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>cronbach_intef</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>cronbach_extef <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_w1[<span class="fu">c</span>(<span class="st">"extef1"</span>, <span class="st">"extef2"</span>, <span class="st">"extef3"</span>)]))</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>cronbach_extef</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>cronbach_media <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_w1[<span class="fu">c</span>(<span class="st">"tv"</span>, <span class="st">"cable"</span>, <span class="st">"newspaper"</span>, <span class="st">"radio"</span>, <span class="st">"tradonline"</span>, <span class="st">"online"</span>, <span class="st">"podcast"</span>, <span class="st">"officialsm"</span>)]))</span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>cronbach_media</span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a>cronbach_social <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_w1[<span class="fu">c</span>(<span class="st">"fb"</span>, <span class="st">"insta"</span>, <span class="st">"twitter"</span>, <span class="st">"whatsapp"</span>, <span class="st">"youtube"</span>, <span class="st">"tiktok"</span>, <span class="st">"discord"</span>, <span class="st">"twitch"</span>)]))</span>
+<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a>cronbach_social</span>
+<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-16"><a href="#cb75-16" aria-hidden="true" tabindex="-1"></a>cronbach_interest <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_w1[<span class="fu">c</span>(<span class="st">"polint"</span>, <span class="st">"procint"</span>, <span class="st">"plebint"</span>)]))</span>
+<span id="cb75-17"><a href="#cb75-17" aria-hidden="true" tabindex="-1"></a>cronbach_interest</span>
+<span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a>cronbach_poluse <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_w1[<span class="fu">c</span>(<span class="st">"use1"</span>, <span class="st">"use2"</span>, <span class="st">"use3"</span>, <span class="st">"use4"</span>, <span class="st">"use5"</span>, <span class="st">"use6"</span>, <span class="st">"use7"</span>)]))</span>
+<span id="cb75-20"><a href="#cb75-20" aria-hidden="true" tabindex="-1"></a>cronbach_poluse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="confirmatory-factor-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="confirmatory-factor-analysis">Confirmatory Factor Analysis</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>data_w1_na <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data_w1[<span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"polint"</span>, <span class="st">"procint"</span>, <span class="st">"plebint"</span>, <span class="st">"ope1"</span>, <span class="st">"ope2"</span>, <span class="st">"ope3"</span>, <span class="st">"ope4"</span>, <span class="st">"intef1"</span>, <span class="st">"intef2"</span>, <span class="st">"intef3"</span>, <span class="st">"extef1"</span>, <span class="st">"extef2"</span>, <span class="st">"extef3"</span>, <span class="st">"tv"</span>, <span class="st">"cable"</span>, <span class="st">"newspaper"</span>, <span class="st">"radio"</span>, <span class="st">"tradonline"</span>, <span class="st">"online"</span>, <span class="st">"podcast"</span>, <span class="st">"officialsm"</span>,<span class="st">"fb"</span>, <span class="st">"insta"</span>, <span class="st">"twitter"</span>, <span class="st">"whatsapp"</span>, <span class="st">"youtube"</span>, <span class="st">"tiktok"</span>, <span class="st">"discord"</span>, <span class="st">"twitch"</span>, <span class="st">"franja"</span>, <span class="st">"use1"</span>, <span class="st">"use2"</span>, <span class="st">"use3"</span>, <span class="st">"use4"</span>, <span class="st">"use5"</span>, <span class="st">"use6"</span>, <span class="st">"use7"</span>, <span class="st">"age_num"</span>, <span class="st">"ses"</span>, <span class="st">"sex"</span>, <span class="st">"educ"</span>)])</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(data_w1_na))</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>data_w1_na <span class="ot">&lt;-</span> data_w1_na <span class="sc">%&gt;%</span></span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.labelled), as.numeric))</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>cfa.model <span class="ot">&lt;-</span> <span class="st">'ope =~ ope1 + ope2 + ope3 + ope4</span></span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a><span class="st">              intef =~ intef1 + intef2 + intef3</span></span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a><span class="st">              extef =~ extef1 + extef2 + extef3</span></span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a><span class="st">              media =~ tv + cable + newspaper + radio + tradonline + online + podcast + officialsm</span></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a><span class="st">              social =~ fb + insta + twitter + whatsapp + youtube + tiktok + discord + twitch</span></span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a><span class="st">              interest =~ polint + procint + plebint</span></span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a><span class="st">              poluse =~ use1 + use2 + use3 + use4 + use5 + use6 + use7'</span></span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a>fit_cfa <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.model, <span class="at">data =</span> data_w1_na)</span>
+<span id="cb76-17"><a href="#cb76-17" aria-hidden="true" tabindex="-1"></a>latent_scores <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_cfa)</span>
+<span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-19"><a href="#cb76-19" aria-hidden="true" tabindex="-1"></a>data_w1_scores <span class="ot">&lt;-</span> <span class="fu">cbind</span>(data_w1_na, latent_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="cross-sectional-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="cross-sectional-analysis">Cross-sectional Analysis</h2>
+<p>Para estos modelos, debiésemos pensar si incluir o no political interest como control. Yo acá las incluí, pero no estoy seguro. Creo que “teóricamente” sería sensato no incluirla, porque puede esconder parte del efecto (multicolinealidad ¿?)</p>
+<section id="olse-for-online-political-efficacy" class="level3">
+<h3 class="anchored" data-anchor-id="olse-for-online-political-efficacy">OLSE for Online Political Efficacy</h3>
+<p>Media Exposure on OPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>ols_ope1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ope <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> media, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_ope1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ope ~ age_num + ses + educ + sex + interest + media, 
+    data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.08246 -0.67363  0.01413  0.58393  2.54230 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.167571   0.222072   0.755 0.450659    
+age_num     -0.007486   0.001975  -3.790 0.000159 ***
+ses          0.046625   0.029457   1.583 0.113743    
+educ         0.008761   0.016388   0.535 0.593047    
+sex         -0.109179   0.055913  -1.953 0.051109 .  
+interest     0.271343   0.031602   8.586  &lt; 2e-16 ***
+media        0.246881   0.052811   4.675  3.3e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9318 on 1127 degrees of freedom
+Multiple R-squared:  0.1326,    Adjusted R-squared:  0.1279 
+F-statistic:  28.7 on 6 and 1127 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Social Media Exposure on OPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>ols_ope2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ope <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> social, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_ope2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ope ~ age_num + ses + educ + sex + interest + social, 
+    data = data_w1_scores)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.2066 -0.6774  0.0196  0.5708  2.6678 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.155862   0.218911   0.712 0.476622    
+age_num     -0.006537   0.001952  -3.348 0.000841 ***
+ses          0.027649   0.029203   0.947 0.343962    
+educ         0.014456   0.016167   0.894 0.371409    
+sex         -0.122152   0.055164  -2.214 0.027005 *  
+interest     0.270681   0.029706   9.112  &lt; 2e-16 ***
+social       0.235806   0.031859   7.402 2.63e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9187 on 1127 degrees of freedom
+Multiple R-squared:  0.1567,    Adjusted R-squared:  0.1522 
+F-statistic: 34.91 on 6 and 1127 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Franja Exposure on OPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>ols_ope3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ope <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> franja, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_ope3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ope ~ age_num + ses + educ + sex + interest + franja, 
+    data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.03446 -0.67228  0.04088  0.60559  2.49983 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.113075   0.231997   0.487 0.626071    
+age_num     -0.007528   0.001995  -3.774 0.000169 ***
+ses          0.051160   0.029724   1.721 0.085499 .  
+educ         0.010789   0.016597   0.650 0.515785    
+sex         -0.110514   0.056748  -1.947 0.051727 .  
+interest     0.325612   0.030324  10.738  &lt; 2e-16 ***
+franja       0.011272   0.020765   0.543 0.587357    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9406 on 1127 degrees of freedom
+Multiple R-squared:  0.116, Adjusted R-squared:  0.1113 
+F-statistic: 24.64 on 6 and 1127 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Social Media Political Use on OPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>ols_ope4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ope <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> poluse, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_ope4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ope ~ age_num + ses + educ + sex + interest + poluse, 
+    data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.34027 -0.66994  0.02551  0.58008  2.46143 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.2857804  0.2159867   1.323  0.18606    
+age_num     -0.0063026  0.0019217  -3.280  0.00107 ** 
+ses          0.0114148  0.0288750   0.395  0.69268    
+educ        -0.0003239  0.0159404  -0.020  0.98379    
+sex         -0.1001032  0.0542733  -1.844  0.06538 .  
+interest     0.1707454  0.0326632   5.227 2.05e-07 ***
+poluse       0.3065948  0.0318763   9.618  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9044 on 1127 degrees of freedom
+Multiple R-squared:  0.1828,    Adjusted R-squared:  0.1785 
+F-statistic: 42.02 on 6 and 1127 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="olse-for-internal-efficacy" class="level3">
+<h3 class="anchored" data-anchor-id="olse-for-internal-efficacy">OLSE for Internal Efficacy</h3>
+<p>Media Exposure on IPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>ols_intef1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(intef <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> media, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_intef1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = intef ~ age_num + ses + educ + sex + interest + 
+    media, data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.94800 -0.33611  0.00455  0.36349  1.46184 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.363010   0.125192  -2.900  0.00381 ** 
+age_num      0.006803   0.001114   6.109 1.38e-09 ***
+ses          0.003017   0.016606   0.182  0.85586    
+educ         0.013575   0.009239   1.469  0.14202    
+sex         -0.075822   0.031521  -2.405  0.01631 *  
+interest     0.293515   0.017816  16.475  &lt; 2e-16 ***
+media        0.095937   0.029772   3.222  0.00131 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5253 on 1127 degrees of freedom
+Multiple R-squared:  0.3152,    Adjusted R-squared:  0.3115 
+F-statistic: 86.44 on 6 and 1127 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Social Media Exposure on IPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>ols_intef2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(intef <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> social, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_intef2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = intef ~ age_num + ses + educ + sex + interest + 
+    social, data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.90888 -0.33829  0.00729  0.35953  1.42242 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.371061   0.125720  -2.951  0.00323 ** 
+age_num      0.006825   0.001121   6.086 1.58e-09 ***
+ses          0.003759   0.016771   0.224  0.82270    
+educ         0.014289   0.009284   1.539  0.12408    
+sex         -0.075816   0.031680  -2.393  0.01687 *  
+interest     0.313414   0.017060  18.371  &lt; 2e-16 ***
+social       0.011329   0.018297   0.619  0.53592    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5276 on 1127 degrees of freedom
+Multiple R-squared:  0.3091,    Adjusted R-squared:  0.3054 
+F-statistic: 84.03 on 6 and 1127 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Franja Exposure on IPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>ols_intef3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(intef <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> franja, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_intef3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = intef ~ age_num + ses + educ + sex + interest + 
+    franja, data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.89064 -0.33505  0.00811  0.35401  1.39402 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.338893   0.130095  -2.605  0.00931 ** 
+age_num      0.006747   0.001119   6.031  2.2e-09 ***
+ses          0.005225   0.016668   0.313  0.75398    
+educ         0.013340   0.009307   1.433  0.15204    
+sex         -0.071906   0.031822  -2.260  0.02403 *  
+interest     0.320533   0.017004  18.850  &lt; 2e-16 ***
+franja      -0.011325   0.011644  -0.973  0.33095    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5275 on 1127 degrees of freedom
+Multiple R-squared:  0.3094,    Adjusted R-squared:  0.3057 
+F-statistic: 84.16 on 6 and 1127 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Social Media Political Use on IPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>ols_intef4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(intef <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> poluse, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_intef4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = intef ~ age_num + ses + educ + sex + interest + 
+    poluse, data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.98528 -0.32789  0.00003  0.35932  1.41830 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.346221   0.125529  -2.758  0.00591 ** 
+age_num      0.007002   0.001117   6.270 5.14e-10 ***
+ses         -0.002336   0.016782  -0.139  0.88933    
+educ         0.012202   0.009264   1.317  0.18807    
+sex         -0.073798   0.031543  -2.340  0.01948 *  
+interest     0.287505   0.018983  15.145  &lt; 2e-16 ***
+poluse       0.055401   0.018526   2.990  0.00285 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5256 on 1127 degrees of freedom
+Multiple R-squared:  0.3143,    Adjusted R-squared:  0.3106 
+F-statistic: 86.09 on 6 and 1127 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="olse-for-external-efficacy" class="level3">
+<h3 class="anchored" data-anchor-id="olse-for-external-efficacy">OLSE for External Efficacy</h3>
+<p>Media Exposure on EPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>ols_extef1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(extef <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> media, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_extef1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = extef ~ age_num + ses + educ + sex + interest + 
+    media, data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.41141 -0.65649 -0.08126  0.49539  2.64045 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.238243   0.188089   1.267   0.2055    
+age_num     -0.010794   0.001673  -6.452 1.64e-10 ***
+ses          0.045041   0.024949   1.805   0.0713 .  
+educ         0.009128   0.013880   0.658   0.5109    
+sex          0.062272   0.047357   1.315   0.1888    
+interest    -0.044979   0.026766  -1.680   0.0932 .  
+media        0.018439   0.044730   0.412   0.6803    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7892 on 1127 degrees of freedom
+Multiple R-squared:  0.05861,   Adjusted R-squared:  0.0536 
+F-statistic: 11.69 on 6 and 1127 DF,  p-value: 9.626e-13</code></pre>
+</div>
+</div>
+<p>Social Media Exposure on EPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>ols_extef2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(extef <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> social, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_extef2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = extef ~ age_num + ses + educ + sex + interest + 
+    social, data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.44562 -0.62662 -0.07256  0.50110  2.64300 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.24044    0.18720   1.284  0.19926    
+age_num     -0.01042    0.00167  -6.240 6.19e-10 ***
+ses          0.03650    0.02497   1.462  0.14409    
+educ         0.01087    0.01383   0.786  0.43192    
+sex          0.05688    0.04717   1.206  0.22819    
+interest    -0.06271    0.02540  -2.469  0.01371 *  
+social       0.08806    0.02724   3.232  0.00126 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7856 on 1127 degrees of freedom
+Multiple R-squared:  0.06711,   Adjusted R-squared:  0.06215 
+F-statistic: 13.51 on 6 and 1127 DF,  p-value: 7.525e-15</code></pre>
+</div>
+</div>
+<p>Franja Exposure on EPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>ols_extef3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(extef <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> franja, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_extef3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = extef ~ age_num + ses + educ + sex + interest + 
+    franja, data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.46010 -0.65337 -0.06918  0.49670  2.65073 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.170608   0.194509   0.877   0.3806    
+age_num     -0.010741   0.001672  -6.422 1.98e-10 ***
+ses          0.044755   0.024921   1.796   0.0728 .  
+educ         0.010716   0.013915   0.770   0.4414    
+sex          0.055948   0.047578   1.176   0.2399    
+interest    -0.049246   0.025424  -1.937   0.0530 .  
+franja       0.022883   0.017409   1.314   0.1890    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7886 on 1127 degrees of freedom
+Multiple R-squared:  0.05991,   Adjusted R-squared:  0.0549 
+F-statistic: 11.97 on 6 and 1127 DF,  p-value: 4.612e-13</code></pre>
+</div>
+</div>
+<p>Social Media Political Use on EPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>ols_extef4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(extef <span class="sc">~</span> age_num <span class="sc">+</span> ses <span class="sc">+</span> educ <span class="sc">+</span> sex <span class="sc">+</span> interest <span class="sc">+</span> poluse, <span class="at">data =</span> data_w1_scores)</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ols_extef4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = extef ~ age_num + ses + educ + sex + interest + 
+    poluse, data = data_w1_scores)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.35393 -0.62228 -0.07628  0.48927  2.53237 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.317891   0.185045   1.718   0.0861 .  
+age_num     -0.010072   0.001646  -6.118 1.31e-09 ***
+ses          0.022173   0.024738   0.896   0.3703    
+educ         0.003207   0.013657   0.235   0.8144    
+sex          0.066601   0.046498   1.432   0.1523    
+interest    -0.132870   0.027984  -4.748 2.32e-06 ***
+poluse       0.177769   0.027310   6.509 1.13e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7748 on 1127 degrees of freedom
+Multiple R-squared:  0.09258,   Adjusted R-squared:  0.08775 
+F-statistic: 19.16 on 6 and 1127 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="longitudinal-approach" class="level2">
+<h2 class="anchored" data-anchor-id="longitudinal-approach">Longitudinal Approach</h2>
+<section id="importing-data-and-creating-variables-1" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data-and-creating-variables-1">Importing data and creating variables</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import Data</span></span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>data_w3 <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"Data_W3.sav"</span>)</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ID</span></span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>id <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>CodPanelista</span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-7"><a href="#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Age</span></span>
+<span id="cb101-8"><a href="#cb101-8" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>age_num <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>age</span>
+<span id="cb101-9"><a href="#cb101-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-10"><a href="#cb101-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Socioeconomic Status</span></span>
+<span id="cb101-11"><a href="#cb101-11" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>ses <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>RECO_NSE</span>
+<span id="cb101-12"><a href="#cb101-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-13"><a href="#cb101-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Sex (1=women)</span></span>
+<span id="cb101-14"><a href="#cb101-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-15"><a href="#cb101-15" aria-hidden="true" tabindex="-1"></a>data_w3 <span class="ot">&lt;-</span> data_w3<span class="sc">%&gt;%</span></span>
+<span id="cb101-16"><a href="#cb101-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">ifelse</span>(SEX <span class="sc">==</span> <span class="dv">2</span>, <span class="dv">1</span>,</span>
+<span id="cb101-17"><a href="#cb101-17" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(SEX <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, <span class="cn">NA</span>)))</span>
+<span id="cb101-18"><a href="#cb101-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-19"><a href="#cb101-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Ideology</span></span>
+<span id="cb101-20"><a href="#cb101-20" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>ideology <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_w3<span class="sc">$</span>P32 <span class="sc">==</span> <span class="dv">99</span>, <span class="cn">NA</span>, data_w3<span class="sc">$</span>P32)</span>
+<span id="cb101-21"><a href="#cb101-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-22"><a href="#cb101-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Social Media Political Use</span></span>
+<span id="cb101-23"><a href="#cb101-23" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>use1 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P25_5</span>
+<span id="cb101-24"><a href="#cb101-24" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>use2 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P25_6</span>
+<span id="cb101-25"><a href="#cb101-25" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>use3 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P25_7</span>
+<span id="cb101-26"><a href="#cb101-26" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>use4 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P25_8</span>
+<span id="cb101-27"><a href="#cb101-27" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>use5 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P25_9</span>
+<span id="cb101-28"><a href="#cb101-28" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>use6 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P25_10</span>
+<span id="cb101-29"><a href="#cb101-29" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>use7 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P25_11</span>
+<span id="cb101-30"><a href="#cb101-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-31"><a href="#cb101-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Online Political Efficacy</span></span>
+<span id="cb101-32"><a href="#cb101-32" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>ope1 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P59_1</span>
+<span id="cb101-33"><a href="#cb101-33" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>ope2 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P59_2</span>
+<span id="cb101-34"><a href="#cb101-34" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>ope3 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P59_3</span>
+<span id="cb101-35"><a href="#cb101-35" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>ope4 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P59_4</span>
+<span id="cb101-36"><a href="#cb101-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-37"><a href="#cb101-37" aria-hidden="true" tabindex="-1"></a><span class="co"># External Political Efficacy (recode)</span></span>
+<span id="cb101-38"><a href="#cb101-38" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>extef1 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P58_1</span>
+<span id="cb101-39"><a href="#cb101-39" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>extef2 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P58_2</span>
+<span id="cb101-40"><a href="#cb101-40" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>extef3 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P58_3</span>
+<span id="cb101-41"><a href="#cb101-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-42"><a href="#cb101-42" aria-hidden="true" tabindex="-1"></a><span class="co"># To recode efficacies (intef1, intef3, extef1, extef3, extef4)</span></span>
+<span id="cb101-43"><a href="#cb101-43" aria-hidden="true" tabindex="-1"></a>data_w3 <span class="ot">&lt;-</span> data_w3 <span class="sc">%&gt;%</span></span>
+<span id="cb101-44"><a href="#cb101-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(extef1, extef2, extef3), <span class="sc">~</span> <span class="dv">6</span> <span class="sc">-</span> .x))</span>
+<span id="cb101-45"><a href="#cb101-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-46"><a href="#cb101-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Internal Political Efficacy</span></span>
+<span id="cb101-47"><a href="#cb101-47" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>intef1 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P58_4</span>
+<span id="cb101-48"><a href="#cb101-48" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>intef2 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P58_5</span>
+<span id="cb101-49"><a href="#cb101-49" aria-hidden="true" tabindex="-1"></a>data_w3<span class="sc">$</span>intef3 <span class="ot">&lt;-</span> data_w3<span class="sc">$</span>P58_6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="checking-the-new-variables-1" class="level3">
+<h3 class="anchored" data-anchor-id="checking-the-new-variables-1">Checking the new variables</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(data_w3<span class="sc">$</span>age_num)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   vars   n mean    sd median trimmed   mad min max range skew kurtosis   se
+X1    1 902 45.4 14.42     44      45 16.31  18  84    66 0.23    -0.87 0.48</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>ses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+148 132 244 281  97 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>SEX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2 
+438 464 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  0   1 
+438 464 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>P32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  0   1   2   3   4   5   6   7   8   9  10  99 
+ 53  19  49  36  51 276  51  36  50  18  64 199 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>ideology)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  0   1   2   3   4   5   6   7   8   9  10 
+ 53  19  49  36  51 276  51  36  50  18  64 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>ope1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+227 118 325 105 127 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>ope2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+178 108 321 147 148 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>ope3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+132 100 321 184 165 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>ope4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+308 145 271 102  76 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>extef1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+465 176 169  37  55 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>extef2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+568 133 136  31  34 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>extef3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+453 145 182  55  67 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>intef1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+ 59  65 327 194 257 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>intef2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+ 83 104 307 176 232 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_w3<span class="sc">$</span>intef3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2   3   4   5 
+ 40  46 279 198 339 </code></pre>
+</div>
+</div>
+</section>
+<section id="creating-long-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="creating-long-dataset">Creating Long Dataset</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the necessary variables</span></span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>data_w1_selec <span class="ot">&lt;-</span> data_w1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, ope1, ope2, ope3, ope4, intef1, intef2, intef3, extef1, extef2, extef3, use1, use2, use3, use4, use5, use6, use7, sex, ses, age_num, ideology)</span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a>data_w3_selec <span class="ot">&lt;-</span> data_w3 <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, ope1, ope2, ope3, ope4, intef1, intef2, intef3, extef1, extef2, extef3, use1, use2, use3, use4, use5, use6, use7, sex, ses, age_num, ideology)</span>
+<span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-6"><a href="#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Find common ids in both datasets</span></span>
+<span id="cb134-7"><a href="#cb134-7" aria-hidden="true" tabindex="-1"></a>common_ids <span class="ot">&lt;-</span> <span class="fu">intersect</span>(data_w1_selec<span class="sc">$</span>id, data_w3_selec<span class="sc">$</span>id)</span>
+<span id="cb134-8"><a href="#cb134-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-9"><a href="#cb134-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter both data frames to include only those ids</span></span>
+<span id="cb134-10"><a href="#cb134-10" aria-hidden="true" tabindex="-1"></a>data_w1_selec <span class="ot">&lt;-</span> data_w1_selec <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> common_ids)</span>
+<span id="cb134-11"><a href="#cb134-11" aria-hidden="true" tabindex="-1"></a>data_w3_selec <span class="ot">&lt;-</span> data_w3_selec <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> common_ids)</span>
+<span id="cb134-12"><a href="#cb134-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-13"><a href="#cb134-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a wave identifier</span></span>
+<span id="cb134-14"><a href="#cb134-14" aria-hidden="true" tabindex="-1"></a>data_w1_selec<span class="sc">$</span>wave <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb134-15"><a href="#cb134-15" aria-hidden="true" tabindex="-1"></a>data_w3_selec<span class="sc">$</span>wave <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb134-16"><a href="#cb134-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-17"><a href="#cb134-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the datasets into a long format</span></span>
+<span id="cb134-18"><a href="#cb134-18" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> <span class="fu">rbind</span>(data_w1_selec, data_w3_selec)</span>
+<span id="cb134-19"><a href="#cb134-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-20"><a href="#cb134-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the first few rows of the combined dataset</span></span>
+<span id="cb134-21"><a href="#cb134-21" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_long)</span>
+<span id="cb134-22"><a href="#cb134-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-23"><a href="#cb134-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution of data across waves</span></span>
+<span id="cb134-24"><a href="#cb134-24" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_long<span class="sc">$</span>wave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="reliability-test-for-long-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="reliability-test-for-long-dataset">Reliability Test for Long Dataset</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>cronbach_ope_long <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_long[<span class="fu">c</span>(<span class="st">"ope1"</span>, <span class="st">"ope2"</span>, <span class="st">"ope3"</span>, <span class="st">"ope4"</span>)]))</span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>cronbach_ope_long</span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a>cronbach_intef_long <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_long[<span class="fu">c</span>(<span class="st">"intef1"</span>, <span class="st">"intef2"</span>, <span class="st">"intef3"</span>)]))</span>
+<span id="cb135-5"><a href="#cb135-5" aria-hidden="true" tabindex="-1"></a>cronbach_intef_long</span>
+<span id="cb135-6"><a href="#cb135-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-7"><a href="#cb135-7" aria-hidden="true" tabindex="-1"></a>cronbach_extef_long <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_long[<span class="fu">c</span>(<span class="st">"extef1"</span>, <span class="st">"extef2"</span>, <span class="st">"extef3"</span>)]))</span>
+<span id="cb135-8"><a href="#cb135-8" aria-hidden="true" tabindex="-1"></a>cronbach_extef_long</span>
+<span id="cb135-9"><a href="#cb135-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-10"><a href="#cb135-10" aria-hidden="true" tabindex="-1"></a>cronbach_poluse_long <span class="ot">&lt;-</span> <span class="fu">alpha</span>(<span class="fu">na.omit</span>(data_long[<span class="fu">c</span>(<span class="st">"use1"</span>, <span class="st">"use2"</span>, <span class="st">"use3"</span>, <span class="st">"use4"</span>, <span class="st">"use5"</span>, <span class="st">"use6"</span>, <span class="st">"use7"</span>)]))</span>
+<span id="cb135-11"><a href="#cb135-11" aria-hidden="true" tabindex="-1"></a>cronbach_poluse_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="creating-latent-variables-for-long-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="creating-latent-variables-for-long-dataset">Creating Latent Variables for Long Dataset</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_long <span class="sc">%&gt;%</span></span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.labelled), as.numeric))</span>
+<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-4"><a href="#cb136-4" aria-hidden="true" tabindex="-1"></a>cfa.model_long <span class="ot">&lt;-</span> <span class="st">'ope =~ ope1 + ope2 + ope3 + ope4</span></span>
+<span id="cb136-5"><a href="#cb136-5" aria-hidden="true" tabindex="-1"></a><span class="st">                intef =~ intef1 + intef2 + intef3</span></span>
+<span id="cb136-6"><a href="#cb136-6" aria-hidden="true" tabindex="-1"></a><span class="st">                extef =~ extef1 + extef2 + extef3</span></span>
+<span id="cb136-7"><a href="#cb136-7" aria-hidden="true" tabindex="-1"></a><span class="st">                poluse =~ use1 + use2 + use3 + use4 + use5 + use6 + use7'</span></span>
+<span id="cb136-8"><a href="#cb136-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-9"><a href="#cb136-9" aria-hidden="true" tabindex="-1"></a>fit_cfa_long <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.model_long, <span class="at">data =</span> data_long)</span>
+<span id="cb136-10"><a href="#cb136-10" aria-hidden="true" tabindex="-1"></a>latent_scores_long <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_cfa_long)</span>
+<span id="cb136-11"><a href="#cb136-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-12"><a href="#cb136-12" aria-hidden="true" tabindex="-1"></a>data_long_scores <span class="ot">&lt;-</span> <span class="fu">cbind</span>(data_long, latent_scores_long)</span>
+<span id="cb136-13"><a href="#cb136-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-14"><a href="#cb136-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the CFA model</span></span>
+<span id="cb136-15"><a href="#cb136-15" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(fit_cfa_long, <span class="st">"std"</span>, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">rotation =</span> <span class="dv">2</span>,</span>
+<span id="cb136-16"><a href="#cb136-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">whatLabels =</span> <span class="st">"std"</span>, <span class="at">edge.label.cex =</span> <span class="fl">0.8</span>,</span>
+<span id="cb136-17"><a href="#cb136-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">sizeMan =</span> <span class="dv">3</span>, <span class="at">sizeLat =</span> <span class="dv">7</span>, <span class="at">title =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Quarto_Paper_MEPOP_1_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="converting-to-panel-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="converting-to-panel-dataset">Converting to Panel Dataset</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert your data to a panel data frame</span></span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">pdata.frame</span>(data_long_scores, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"wave"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="panel-regression-for-ope" class="level3">
+<h3 class="anchored" data-anchor-id="panel-regression-for-ope">Panel Regression for OPE</h3>
+<p>Primero, estimamos dos modelos, uno con efectos fijos (FE) y otros con random effects (RA). Luego de estimar el test de Hausman (p-value &gt; 0,05), decidimos reportar el modelo con random effects:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a random effects model</span></span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a>model_re_ope <span class="ot">&lt;-</span> <span class="fu">plm</span>(ope <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata, <span class="at">model =</span> <span class="st">"random"</span>)</span>
+<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-4"><a href="#cb138-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a FE model</span></span>
+<span id="cb138-5"><a href="#cb138-5" aria-hidden="true" tabindex="-1"></a>model_fe_ope <span class="ot">&lt;-</span> <span class="fu">plm</span>(ope <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata, <span class="at">model =</span> <span class="st">"within"</span>)</span>
+<span id="cb138-6"><a href="#cb138-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-7"><a href="#cb138-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the Hausman test</span></span>
+<span id="cb138-8"><a href="#cb138-8" aria-hidden="true" tabindex="-1"></a>hausman_test_ope <span class="ot">&lt;-</span> <span class="fu">phtest</span>(model_fe_ope, model_re_ope)</span>
+<span id="cb138-9"><a href="#cb138-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-10"><a href="#cb138-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results of the Hausman test</span></span>
+<span id="cb138-11"><a href="#cb138-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(hausman_test_ope)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Hausman Test
+
+data:  ope ~ poluse + ideology + ses + sex + age_num
+chisq = 2.9046, df = 4, p-value = 0.5739
+alternative hypothesis: one model is inconsistent</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the random effects model</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_re_ope)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oneway (individual) effect Random Effect Model 
+   (Swamy-Arora's transformation)
+
+Call:
+plm(formula = ope ~ poluse + ideology + ses + sex + age_num, 
+    data = pdata, model = "random")
+
+Unbalanced Panel: n = 771, T = 1-2, N = 1403
+
+Effects:
+                 var std.dev share
+idiosyncratic 0.5286  0.7270 0.608
+individual    0.3401  0.5832 0.392
+theta:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.2199  0.3387  0.3387  0.3270  0.3387  0.3387 
+
+Residuals:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-1.90094 -0.52418  0.02308  0.00054  0.46377  2.18764 
+
+Coefficients:
+              Estimate Std. Error z-value Pr(&gt;|z|)    
+(Intercept)  0.1400564  0.1504043  0.9312  0.35175    
+poluse       0.3942251  0.0267159 14.7562  &lt; 2e-16 ***
+ideology     0.0152520  0.0106178  1.4365  0.15087    
+ses         -0.0102614  0.0234937 -0.4368  0.66227    
+sex          0.0415483  0.0583131  0.7125  0.47615    
+age_num     -0.0039471  0.0020856 -1.8925  0.05842 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Total Sum of Squares:    856.36
+Residual Sum of Squares: 736.75
+R-Squared:      0.13967
+Adj. R-Squared: 0.13659
+Chisq: 227.325 on 5 DF, p-value: &lt; 2.22e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="panel-regression-for-ipe" class="level3">
+<h3 class="anchored" data-anchor-id="panel-regression-for-ipe">Panel Regression for IPE</h3>
+<p>Primero, estimamos dos modelos, uno con efectos fijos (FE) y otros con random effects (RA). Luego de estimar el test de Hausman (p-value &lt; 0,05), decidimos reportar el modelo con efectos fijos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a random effects model</span></span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>model_re_intef <span class="ot">&lt;-</span> <span class="fu">plm</span>(intef <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata, <span class="at">model =</span> <span class="st">"random"</span>)</span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a fixed effects model</span></span>
+<span id="cb142-5"><a href="#cb142-5" aria-hidden="true" tabindex="-1"></a>model_fe_intef <span class="ot">&lt;-</span> <span class="fu">plm</span>(intef <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata, <span class="at">model =</span> <span class="st">"within"</span>)</span>
+<span id="cb142-6"><a href="#cb142-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-7"><a href="#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the Hausman test</span></span>
+<span id="cb142-8"><a href="#cb142-8" aria-hidden="true" tabindex="-1"></a>hausman_test_intef <span class="ot">&lt;-</span> <span class="fu">phtest</span>(model_fe_intef, model_re_intef)</span>
+<span id="cb142-9"><a href="#cb142-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-10"><a href="#cb142-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results of the Hausman test</span></span>
+<span id="cb142-11"><a href="#cb142-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(hausman_test_intef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Hausman Test
+
+data:  intef ~ poluse + ideology + ses + sex + age_num
+chisq = 17.792, df = 4, p-value = 0.001355
+alternative hypothesis: one model is inconsistent</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the random effects model</span></span>
+<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_fe_intef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oneway (individual) effect Within Model
+
+Call:
+plm(formula = intef ~ poluse + ideology + ses + sex + age_num, 
+    data = pdata, model = "within")
+
+Unbalanced Panel: n = 771, T = 1-2, N = 1403
+
+Residuals:
+    Min.  1st Qu.   Median  3rd Qu.     Max. 
+-1.03647 -0.10495  0.00000  0.10495  1.03647 
+
+Coefficients:
+           Estimate Std. Error t-value Pr(&gt;|t|)
+poluse   0.03420092 0.02366427  1.4453   0.1489
+ideology 0.00092247 0.01222762  0.0754   0.9399
+ses      0.01853026 0.03654759  0.5070   0.6123
+age_num  0.02178730 0.04529339  0.4810   0.6307
+
+Total Sum of Squares:    70.951
+Residual Sum of Squares: 70.664
+R-Squared:      0.0040503
+Adj. R-Squared: -1.2234
+F-statistic: 0.638481 on 4 and 628 DF, p-value: 0.63521</code></pre>
+</div>
+</div>
+</section>
+<section id="panel-regression-for-epe" class="level3">
+<h3 class="anchored" data-anchor-id="panel-regression-for-epe">Panel Regression for EPE</h3>
+<p>Primero, estimamos dos modelos, uno con efectos fijos (FE) y otros con random effects (RA). Luego de estimar el test de Hausman (p-value &gt; 0,05), decidimos reportar el modelo con random effects:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a random effects model</span></span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>model_re_extef <span class="ot">&lt;-</span> <span class="fu">plm</span>(extef <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata, <span class="at">model =</span> <span class="st">"random"</span>)</span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a fixed effects model</span></span>
+<span id="cb146-5"><a href="#cb146-5" aria-hidden="true" tabindex="-1"></a>model_fe_extef <span class="ot">&lt;-</span> <span class="fu">plm</span>(extef <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata, <span class="at">model =</span> <span class="st">"within"</span>)</span>
+<span id="cb146-6"><a href="#cb146-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-7"><a href="#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the Hausman test</span></span>
+<span id="cb146-8"><a href="#cb146-8" aria-hidden="true" tabindex="-1"></a>hausman_test_extef <span class="ot">&lt;-</span> <span class="fu">phtest</span>(model_fe_extef, model_re_extef)</span>
+<span id="cb146-9"><a href="#cb146-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-10"><a href="#cb146-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results of the Hausman test</span></span>
+<span id="cb146-11"><a href="#cb146-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(hausman_test_extef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Hausman Test
+
+data:  extef ~ poluse + ideology + ses + sex + age_num
+chisq = 1.1179, df = 4, p-value = 0.8914
+alternative hypothesis: one model is inconsistent</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the random effects model</span></span>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_re_extef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oneway (individual) effect Random Effect Model 
+   (Swamy-Arora's transformation)
+
+Call:
+plm(formula = extef ~ poluse + ideology + ses + sex + age_num, 
+    data = pdata, model = "random")
+
+Unbalanced Panel: n = 771, T = 1-2, N = 1403
+
+Effects:
+                 var std.dev share
+idiosyncratic 0.3226  0.5680 0.539
+individual    0.2757  0.5251 0.461
+theta:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.2657  0.3925  0.3925  0.3799  0.3925  0.3925 
+
+Residuals:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-1.23285 -0.43847 -0.12064 -0.00252  0.36063  2.30798 
+
+Coefficients:
+              Estimate Std. Error z-value  Pr(&gt;|z|)    
+(Intercept)  0.4189241  0.1271025  3.2960 0.0009809 ***
+poluse       0.1102612  0.0221566  4.9764 6.476e-07 ***
+ideology    -0.0155444  0.0089000 -1.7466 0.0807124 .  
+ses         -0.0079190  0.0197904 -0.4001 0.6890530    
+sex          0.0798354  0.0495226  1.6121 0.1069404    
+age_num     -0.0077897  0.0017703 -4.4002 1.081e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Total Sum of Squares:    471.34
+Residual Sum of Squares: 451.68
+R-Squared:      0.041723
+Adj. R-Squared: 0.038293
+Chisq: 60.7255 on 5 DF, p-value: 8.6054e-12</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s next</h2>
+<p>Esta es mi primera vez analizando datos panel, entonces me quedé con dudas sobre la parte panel regression.</p>
+<ol type="1">
+<li><p>Incluí variables sociodemográficas como control, pero son variables constantes en ambas olas… Creo que no está del todo correcto incluirlas, quizás es mejor estimar panel regression con FE.</p></li>
+<li><p>Hay que ver cómo reportar el R-squared within, between y overall. Parece ser clave para interpretar los resultados del panel regression, pero no es algo que el código reporte por defecto.</p></li>
+</ol>
+</section>
+<section id="appendix-analyses-with-a-balanced-panel" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-analyses-with-a-balanced-panel">Appendix Analyses With a Balanced Panel</h2>
+<p>En este apéndice testeamos los modelos pero, antes, balanceamos el panel En los modelos reportados antes, la muestra seguía desbalanceada, probablemente por casos que tenían NAs en algunas de las variables y algunas de las olas. Los resultados utilizando el panel balaneado son iguales.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset and check for complete cases in each wave</span></span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>data_w1_complete <span class="ot">&lt;-</span> data_w1 <span class="sc">%&gt;%</span></span>
+<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, ope1, ope2, ope3, ope4, intef1, intef2, intef3, extef1, extef2, extef3, use1, use2, use3, use4, use5, use6, use7, sex, ses, age_num, ideology) <span class="sc">%&gt;%</span></span>
+<span id="cb150-4"><a href="#cb150-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.))</span>
+<span id="cb150-5"><a href="#cb150-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-6"><a href="#cb150-6" aria-hidden="true" tabindex="-1"></a>data_w3_complete <span class="ot">&lt;-</span> data_w3 <span class="sc">%&gt;%</span></span>
+<span id="cb150-7"><a href="#cb150-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, ope1, ope2, ope3, ope4, intef1, intef2, intef3, extef1, extef2, extef3, use1, use2, use3, use4, use5, use6, use7, sex, ses, age_num, ideology) <span class="sc">%&gt;%</span></span>
+<span id="cb150-8"><a href="#cb150-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(.))</span>
+<span id="cb150-9"><a href="#cb150-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-10"><a href="#cb150-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Find common ids that are complete in both datasets</span></span>
+<span id="cb150-11"><a href="#cb150-11" aria-hidden="true" tabindex="-1"></a>common_ids_complete <span class="ot">&lt;-</span> <span class="fu">intersect</span>(data_w1_complete<span class="sc">$</span>id, data_w3_complete<span class="sc">$</span>id)</span>
+<span id="cb150-12"><a href="#cb150-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-13"><a href="#cb150-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter both data frames to include only those complete ids</span></span>
+<span id="cb150-14"><a href="#cb150-14" aria-hidden="true" tabindex="-1"></a>data_w1_selec <span class="ot">&lt;-</span> data_w1_complete <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> common_ids_complete)</span>
+<span id="cb150-15"><a href="#cb150-15" aria-hidden="true" tabindex="-1"></a>data_w3_selec <span class="ot">&lt;-</span> data_w3_complete <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> common_ids_complete)</span>
+<span id="cb150-16"><a href="#cb150-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-17"><a href="#cb150-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a wave identifier</span></span>
+<span id="cb150-18"><a href="#cb150-18" aria-hidden="true" tabindex="-1"></a>data_w1_selec<span class="sc">$</span>wave <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb150-19"><a href="#cb150-19" aria-hidden="true" tabindex="-1"></a>data_w3_selec<span class="sc">$</span>wave <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb150-20"><a href="#cb150-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-21"><a href="#cb150-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the datasets into a long format</span></span>
+<span id="cb150-22"><a href="#cb150-22" aria-hidden="true" tabindex="-1"></a>data_long_complete <span class="ot">&lt;-</span> <span class="fu">rbind</span>(data_w1_selec, data_w3_selec)</span>
+<span id="cb150-23"><a href="#cb150-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-24"><a href="#cb150-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the first few rows of the combined dataset</span></span>
+<span id="cb150-25"><a href="#cb150-25" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_long_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 23
+  id       ope1    ope2    ope3    ope4    intef1  intef2  intef3  extef1 extef2
+  &lt;chr&gt;    &lt;dbl+l&gt; &lt;dbl+l&gt; &lt;dbl+l&gt; &lt;dbl+l&gt; &lt;dbl+l&gt; &lt;dbl+l&gt; &lt;dbl+l&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 010a9d3… 1 [1 M… 1 [1 M… 1 [1 M… 1 [1 M… 5 [5 M… 3 [3]   2 [2]        1      1
+2 0191331… 4 [4]   4 [4]   5 [5 M… 1 [1 M… 4 [4]   4 [4]   5 [5 M…      1      1
+3 023294d… 2 [2]   1 [1 M… 3 [3]   2 [2]   5 [5 M… 1 [1 M… 2 [2]        1      1
+4 030ff44… 2 [2]   3 [3]   3 [3]   5 [5 M… 4 [4]   5 [5 M… 4 [4]        2      1
+5 038d5d9… 3 [3]   3 [3]   4 [4]   3 [3]   4 [4]   3 [3]   4 [4]        2      3
+6 03c9053… 1 [1 M… 1 [1 M… 1 [1 M… 1 [1 M… 3 [3]   3 [3]   3 [3]        3      5
+# ℹ 13 more variables: extef3 &lt;dbl&gt;, use1 &lt;dbl+lbl&gt;, use2 &lt;dbl+lbl&gt;,
+#   use3 &lt;dbl+lbl&gt;, use4 &lt;dbl+lbl&gt;, use5 &lt;dbl+lbl&gt;, use6 &lt;dbl+lbl&gt;,
+#   use7 &lt;dbl+lbl&gt;, sex &lt;dbl&gt;, ses &lt;dbl+lbl&gt;, age_num &lt;dbl&gt;, ideology &lt;dbl&gt;,
+#   wave &lt;dbl&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution of data across waves</span></span>
+<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_long_complete<span class="sc">$</span>wave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  1   2 
+632 632 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a>data_long_complete <span class="ot">&lt;-</span> data_long_complete <span class="sc">%&gt;%</span></span>
+<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.labelled), as.numeric))</span>
+<span id="cb154-3"><a href="#cb154-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-4"><a href="#cb154-4" aria-hidden="true" tabindex="-1"></a>cfa.model_long_complete <span class="ot">&lt;-</span> <span class="st">'ope =~ ope1 + ope2 + ope3 + ope4</span></span>
+<span id="cb154-5"><a href="#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="st">                intef =~ intef1 + intef2 + intef3</span></span>
+<span id="cb154-6"><a href="#cb154-6" aria-hidden="true" tabindex="-1"></a><span class="st">                extef =~ extef1 + extef2 + extef3</span></span>
+<span id="cb154-7"><a href="#cb154-7" aria-hidden="true" tabindex="-1"></a><span class="st">                poluse =~ use1 + use2 + use3 + use4 + use5 + use6 + use7'</span></span>
+<span id="cb154-8"><a href="#cb154-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-9"><a href="#cb154-9" aria-hidden="true" tabindex="-1"></a>fit_cfa_long_complete <span class="ot">&lt;-</span> <span class="fu">cfa</span>(cfa.model_long_complete, <span class="at">data =</span> data_long_complete)</span>
+<span id="cb154-10"><a href="#cb154-10" aria-hidden="true" tabindex="-1"></a>latent_scores_long_complete <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_cfa_long_complete)</span>
+<span id="cb154-11"><a href="#cb154-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-12"><a href="#cb154-12" aria-hidden="true" tabindex="-1"></a>data_long_complete_scores <span class="ot">&lt;-</span> <span class="fu">cbind</span>(data_long_complete, latent_scores_long_complete)</span>
+<span id="cb154-13"><a href="#cb154-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-14"><a href="#cb154-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert your data to a panel data frame</span></span>
+<span id="cb154-15"><a href="#cb154-15" aria-hidden="true" tabindex="-1"></a>pdata_complete <span class="ot">&lt;-</span> <span class="fu">pdata.frame</span>(data_long_complete_scores, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"wave"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Panel Regressions OPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a random effects model</span></span>
+<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>model_re_ope_bal <span class="ot">&lt;-</span> <span class="fu">plm</span>(ope <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata_complete, <span class="at">model =</span> <span class="st">"random"</span>)</span>
+<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a FE model</span></span>
+<span id="cb155-5"><a href="#cb155-5" aria-hidden="true" tabindex="-1"></a>model_fe_ope_bal <span class="ot">&lt;-</span> <span class="fu">plm</span>(ope <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata_complete, <span class="at">model =</span> <span class="st">"within"</span>)</span>
+<span id="cb155-6"><a href="#cb155-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-7"><a href="#cb155-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the Hausman test</span></span>
+<span id="cb155-8"><a href="#cb155-8" aria-hidden="true" tabindex="-1"></a>hausman_test_ope_bal <span class="ot">&lt;-</span> <span class="fu">phtest</span>(model_fe_ope_bal, model_re_ope_bal)</span>
+<span id="cb155-9"><a href="#cb155-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-10"><a href="#cb155-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results of the Hausman test</span></span>
+<span id="cb155-11"><a href="#cb155-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(hausman_test_ope_bal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Hausman Test
+
+data:  ope ~ poluse + ideology + ses + sex + age_num
+chisq = 2.6035, df = 4, p-value = 0.6262
+alternative hypothesis: one model is inconsistent</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the random effects model</span></span>
+<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_re_ope_bal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oneway (individual) effect Random Effect Model 
+   (Swamy-Arora's transformation)
+
+Call:
+plm(formula = ope ~ poluse + ideology + ses + sex + age_num, 
+    data = pdata_complete, model = "random")
+
+Balanced Panel: n = 632, T = 2, N = 1264
+
+Effects:
+                 var std.dev share
+idiosyncratic 0.5147  0.7174 0.608
+individual    0.3321  0.5763 0.392
+theta: 0.3393
+
+Residuals:
+     Min.   1st Qu.    Median   3rd Qu.      Max. 
+-1.886505 -0.514816  0.027464  0.468951  2.148464 
+
+Coefficients:
+              Estimate Std. Error z-value Pr(&gt;|z|)    
+(Intercept)  0.1424367  0.1589574  0.8961  0.37022    
+poluse       0.3974195  0.0283958 13.9957  &lt; 2e-16 ***
+ideology     0.0149748  0.0108462  1.3807  0.16739    
+ses         -0.0113996  0.0251782 -0.4528  0.65073    
+sex          0.0575954  0.0621716  0.9264  0.35424    
+age_num     -0.0045821  0.0022110 -2.0724  0.03822 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Total Sum of Squares:    753.66
+Residual Sum of Squares: 646.79
+R-Squared:      0.1418
+Adj. R-Squared: 0.13839
+Chisq: 207.853 on 5 DF, p-value: &lt; 2.22e-16</code></pre>
+</div>
+</div>
+<p>Panel Regressions IPE</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a random effects model</span></span>
+<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a>model_re_intef_bal <span class="ot">&lt;-</span> <span class="fu">plm</span>(intef <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata_complete, <span class="at">model =</span> <span class="st">"random"</span>)</span>
+<span id="cb159-3"><a href="#cb159-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-4"><a href="#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a fixed effects model</span></span>
+<span id="cb159-5"><a href="#cb159-5" aria-hidden="true" tabindex="-1"></a>model_fe_intef_bal <span class="ot">&lt;-</span> <span class="fu">plm</span>(intef <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata_complete, <span class="at">model =</span> <span class="st">"within"</span>)</span>
+<span id="cb159-6"><a href="#cb159-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-7"><a href="#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the Hausman test</span></span>
+<span id="cb159-8"><a href="#cb159-8" aria-hidden="true" tabindex="-1"></a>hausman_test_intef_bal <span class="ot">&lt;-</span> <span class="fu">phtest</span>(model_fe_intef_bal, model_re_intef_bal)</span>
+<span id="cb159-9"><a href="#cb159-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-10"><a href="#cb159-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results of the Hausman test</span></span>
+<span id="cb159-11"><a href="#cb159-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(hausman_test_intef_bal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Hausman Test
+
+data:  intef ~ poluse + ideology + ses + sex + age_num
+chisq = 14.977, df = 4, p-value = 0.00475
+alternative hypothesis: one model is inconsistent</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the random effects model</span></span>
+<span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_fe_intef_bal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oneway (individual) effect Within Model
+
+Call:
+plm(formula = intef ~ poluse + ideology + ses + sex + age_num, 
+    data = pdata_complete, model = "within")
+
+Balanced Panel: n = 632, T = 2, N = 1264
+
+Residuals:
+       Min.     1st Qu.      Median     3rd Qu.        Max. 
+-9.3478e-01 -1.1405e-01 -5.5511e-17  1.1405e-01  9.3478e-01 
+
+Coefficients:
+           Estimate Std. Error t-value Pr(&gt;|t|)
+poluse   0.02603575 0.02226596  1.1693   0.2427
+ideology 0.00095487 0.01130251  0.0845   0.9327
+ses      0.01747224 0.03378143  0.5172   0.6052
+age_num  0.01849735 0.04186544  0.4418   0.6588
+
+Total Sum of Squares:    60.546
+Residual Sum of Squares: 60.372
+R-Squared:      0.002878
+Adj. R-Squared: -1.0054
+F-statistic: 0.453155 on 4 and 628 DF, p-value: 0.77012</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a random effects model</span></span>
+<span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a>model_re_extef_bal <span class="ot">&lt;-</span> <span class="fu">plm</span>(extef <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata_complete, <span class="at">model =</span> <span class="st">"random"</span>)</span>
+<span id="cb163-3"><a href="#cb163-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-4"><a href="#cb163-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a fixed effects model</span></span>
+<span id="cb163-5"><a href="#cb163-5" aria-hidden="true" tabindex="-1"></a>model_fe_extef_bal <span class="ot">&lt;-</span> <span class="fu">plm</span>(extef <span class="sc">~</span> poluse <span class="sc">+</span> ideology <span class="sc">+</span> ses <span class="sc">+</span> sex <span class="sc">+</span> age_num, <span class="at">data =</span> pdata_complete, <span class="at">model =</span> <span class="st">"within"</span>)</span>
+<span id="cb163-6"><a href="#cb163-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-7"><a href="#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the Hausman test</span></span>
+<span id="cb163-8"><a href="#cb163-8" aria-hidden="true" tabindex="-1"></a>hausman_test_extef_bal <span class="ot">&lt;-</span> <span class="fu">phtest</span>(model_fe_extef_bal, model_re_extef_bal)</span>
+<span id="cb163-9"><a href="#cb163-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-10"><a href="#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results of the Hausman test</span></span>
+<span id="cb163-11"><a href="#cb163-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(hausman_test_extef_bal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Hausman Test
+
+data:  extef ~ poluse + ideology + ses + sex + age_num
+chisq = 0.7499, df = 4, p-value = 0.945
+alternative hypothesis: one model is inconsistent</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the random effects model</span></span>
+<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_re_extef_bal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oneway (individual) effect Random Effect Model 
+   (Swamy-Arora's transformation)
+
+Call:
+plm(formula = extef ~ poluse + ideology + ses + sex + age_num, 
+    data = pdata_complete, model = "random")
+
+Balanced Panel: n = 632, T = 2, N = 1264
+
+Effects:
+                 var std.dev share
+idiosyncratic 0.3282  0.5729  0.55
+individual    0.2690  0.5187  0.45
+theta: 0.3845
+
+Residuals:
+    Min.  1st Qu.   Median  3rd Qu.     Max. 
+-1.18351 -0.43023 -0.12477  0.34248  2.33106 
+
+Coefficients:
+              Estimate Std. Error z-value  Pr(&gt;|z|)    
+(Intercept)  0.3686503  0.1354970  2.7207  0.006514 ** 
+poluse       0.1381676  0.0237726  5.8121 6.171e-09 ***
+ideology    -0.0143471  0.0091673 -1.5650  0.117576    
+ses         -0.0171061  0.0213970 -0.7995  0.424023    
+sex          0.0995493  0.0532494  1.8695  0.061555 .  
+age_num     -0.0063578  0.0018923 -3.3598  0.000780 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Total Sum of Squares:    431.91
+Residual Sum of Squares: 411.86
+R-Squared:      0.046423
+Adj. R-Squared: 0.042633
+Chisq: 61.2435 on 5 DF, p-value: 6.7243e-12</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
