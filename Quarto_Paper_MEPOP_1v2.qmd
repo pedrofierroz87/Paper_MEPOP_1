@@ -1,0 +1,413 @@
+---
+title: "Paper_MEPOP_1"
+author: "Pedro Fierro"
+format: html
+editor: visual
+---
+
+# PAPER 1
+
+## The Impact of Political Campaigns on Affection: The Case of the First Chilean Constitutional Process (2022)
+
+Authors: Pedro Fierro, Claudia Ramírez, Andrés Sherman y Sebastián Rivera
+
+† Este documento es para compartir ideas y tener acceso al código que estamos ocupando.
+
+## Environment
+
+### Preparing our environment (loading libraries).
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+rm(list=ls())
+library(haven)
+library(knitr)
+library(lattice)
+library(tidyverse)
+library(here)
+library(flextable)
+library(devtools)
+library(lavaan)
+library(ggplot2)
+library(plm)
+library(naniar)
+library(purrr)
+library(psych)
+library(interactions)
+library(semPlot)
+```
+
+## Cross-Sectional Approach
+
+### Importing data and creating variables
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+#Import Data
+
+data_w1 <- read_sav("Data_W1.sav")
+
+# ID
+data_w1$id <- data_w1$CodPanelista
+
+# Age
+data_w1$age_num <- data_w1$age
+
+# Socioeconomic Status
+data_w1$ses <- data_w1$RECO_NSE
+
+# Education
+data_w1$educ <- data_w1$P60
+
+# Sex (1=women)
+data_w1 <- data_w1%>%
+  mutate(sex = ifelse(SEX == 2, 1,
+                      ifelse(SEX == 1, 0, NA)))
+
+# Ideology
+data_w1$ideology <- ifelse(data_w1$P32 == 99, NA, data_w1$P32)
+
+# Ideological Polarization
+# Compute polarization as distance from the center (5), then add 1 to match desired scale
+data_w1$ideo_polarization <- abs(as.numeric(data_w1$ideology) - 5) + 1
+
+# Affective Polarization
+
+# List of variable names
+p44_vars <- paste0("P44_", 1:8)
+
+# Loop through and create new affect_polarization variables
+for (i in 1:8) {
+  original_var <- data_w1[[p44_vars[i]]]
+  new_var_name <- paste0("affect_polarization", i)
+  
+  data_w1[[new_var_name]] <- ifelse(
+    as.numeric(original_var) == 99,
+    NA,
+    abs(as.numeric(original_var) - 5) + 1
+  )
+}
+
+
+
+# Online Political Efficacy
+data_w1$ope1 <- data_w1$P59_1
+data_w1$ope2 <- data_w1$P59_2
+data_w1$ope3 <- data_w1$P59_3
+data_w1$ope4 <- data_w1$P59_4
+
+# External Political Efficacy (recode)
+data_w1$extef1 <- data_w1$P58_1
+data_w1$extef2 <- data_w1$P58_2
+data_w1$extef3 <- data_w1$P58_3
+
+# To recode efficacies (intef1, intef3, extef1, extef3, extef4)
+data_w1 <- data_w1 %>%
+  mutate(across(c(extef1, extef2, extef3), ~ 6 - .x))
+
+# Internal Political Efficacy
+data_w1$intef1 <- data_w1$P58_4
+data_w1$intef2 <- data_w1$P58_5
+data_w1$intef3 <- data_w1$P58_6
+
+# Media Exposure
+data_w1$tv <- data_w1$P4_1
+data_w1$cable <- data_w1$P4_2
+data_w1$newspaper <- data_w1$P4_3
+data_w1$radio <- data_w1$P4_4
+data_w1$tradonline <- data_w1$P4_5
+data_w1$online <- data_w1$P4_6
+data_w1$podcast <- data_w1$P4_7
+data_w1$officialsm <- data_w1$P4_8
+
+# Social Media Exposure
+data_w1$fb <- ifelse(data_w1$P5_1 == 99, NA, data_w1$P5_1)
+data_w1$insta <- ifelse(data_w1$P5_2 == 99, NA, data_w1$P5_2)
+data_w1$twitter <- ifelse(data_w1$P5_3 == 99, NA, data_w1$P5_3)
+data_w1$whatsapp <- ifelse(data_w1$P5_4 == 99, NA, data_w1$P5_4)
+data_w1$youtube <- ifelse(data_w1$P5_5 == 99, NA, data_w1$P5_5)
+data_w1$tiktok <- ifelse(data_w1$P5_6 == 99, NA, data_w1$P5_6)
+data_w1$discord <- ifelse(data_w1$P5_7 == 99, NA, data_w1$P5_7)
+data_w1$twitch <- ifelse(data_w1$P5_8 == 99, NA, data_w1$P5_8)
+
+# Franja Exposure
+data_w1$franja <- data_w1$P6_1
+
+# Social Media Political Use
+data_w1$use1 <- data_w1$P25_5
+data_w1$use2 <- data_w1$P25_6
+data_w1$use3 <- data_w1$P25_7
+data_w1$use4 <- data_w1$P25_8
+data_w1$use5 <- data_w1$P25_9
+data_w1$use6 <- data_w1$P25_10
+data_w1$use7 <- data_w1$P25_11
+
+# Interest
+data_w1$polint <- data_w1$P21
+data_w1$procint <- data_w1$P22
+data_w1$plebint <- data_w1$P23
+```
+
+### Checking the new variables
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+describe(data_w1$age_num)
+table(data_w1$ses)
+table(data_w1$educ)
+table(data_w1$SEX)
+table(data_w1$sex)
+table(data_w1$ideology)
+table(data_w1$ideo_polarization)
+
+table(data_w1$affect_polarization1)
+table(data_w1$affect_polarization2)
+table(data_w1$affect_polarization3)
+table(data_w1$affect_polarization4)
+table(data_w1$affect_polarization5)
+table(data_w1$affect_polarization6)
+table(data_w1$affect_polarization7)
+table(data_w1$affect_polarization8)
+
+table(data_w1$ope1)
+table(data_w1$ope2)
+table(data_w1$ope3)
+table(data_w1$ope4)
+
+table(data_w1$extef1)
+table(data_w1$extef2)
+table(data_w1$extef3)
+
+table(data_w1$intef1)
+table(data_w1$intef2)
+table(data_w1$intef3)
+
+table(data_w1$tv)
+table(data_w1$cable)
+table(data_w1$newspaper)
+table(data_w1$radio)
+table(data_w1$tradonline)
+table(data_w1$online)
+table(data_w1$podcast)
+table(data_w1$officialsm)
+
+table(data_w1$fb)
+table(data_w1$insta)
+table(data_w1$twitter)
+table(data_w1$whatsapp)
+table(data_w1$youtube)
+table(data_w1$tiktok)
+table(data_w1$discord)
+table(data_w1$twitch)
+
+table(data_w1$franja)
+
+table(data_w1$polint)
+table(data_w1$procint)
+table(data_w1$plebint)
+
+
+```
+
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+
+## Creating Factors
+
+### Reliability Test
+
+cronbach_affect_polarization <- alpha(na.omit(data_w1[c("affect_polarization1", "affect_polarization2", "affect_polarization3", "affect_polarization4", "affect_polarization5", "affect_polarization6", "affect_polarization7", "affect_polarization8")]))
+cronbach_affect_polarization
+
+cronbach_ope <- alpha(na.omit(data_w1[c("ope1", "ope2", "ope3", "ope4")]))
+cronbach_ope
+
+cronbach_intef <- alpha(na.omit(data_w1[c("intef1", "intef2", "intef3")]))
+cronbach_intef
+
+cronbach_extef <- alpha(na.omit(data_w1[c("extef1", "extef2", "extef3")]))
+cronbach_extef
+
+cronbach_media <- alpha(na.omit(data_w1[c("tv", "cable", "newspaper", "radio", "tradonline", "online", "podcast", "officialsm")]))
+cronbach_media
+
+cronbach_social <- alpha(na.omit(data_w1[c("fb", "insta", "twitter", "whatsapp", "youtube", "tiktok", "discord", "twitch")]))
+cronbach_social
+
+cronbach_interest <- alpha(na.omit(data_w1[c("polint", "procint", "plebint")]))
+cronbach_interest
+
+cronbach_poluse <- alpha(na.omit(data_w1[c("use1", "use2", "use3", "use4", "use5", "use6", "use7")]))
+cronbach_poluse
+```
+
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+
+### Confirmatory Factor Analysis
+
+data_w1_na <- na.omit(data_w1[c("id", "polint", "procint", "plebint", "ope1", "ope2", "ope3", "ope4", "intef1", "intef2", "intef3", "extef1", "extef2", "extef3", "tv", "cable", "newspaper", "radio", "tradonline", "online", "podcast", "officialsm","fb", "insta", "twitter", "whatsapp", "youtube", "tiktok", "franja", "use1", "use2", "use3", "use4", "use5", "use6", "use7", "age_num", "ses", "sex", "educ", "ideo_polarization", "affect_polarization1", "affect_polarization2", "affect_polarization3", "affect_polarization4", "affect_polarization5", "affect_polarization6", "affect_polarization7", "affect_polarization8")])
+sum(is.na(data_w1_na))
+
+data_w1_na <- data_w1_na %>%
+  mutate(across(where(is.labelled), as.numeric))
+
+cfa.model <- 'ope =~ ope1 + ope2 + ope3 + ope4
+              intef =~ intef1 + intef2 + intef3
+              extef =~ extef1 + extef2 + extef3
+              media =~ tv + cable + newspaper + radio + tradonline + online + podcast + officialsm
+              social =~ fb + insta + twitter + whatsapp + youtube + tiktok
+              interest =~ polint + procint + plebint
+              poluse =~ use1 + use2 + use3 + use4 + use5 + use6 + use7
+              affect_polarization =~ affect_polarization1 + affect_polarization2 + affect_polarization3 + affect_polarization4 + affect_polarization5 + affect_polarization6 + affect_polarization7 + affect_polarization8'
+
+
+fit_cfa <- cfa(cfa.model, data = data_w1_na)
+latent_scores <- predict(fit_cfa)
+
+data_w1_scores <- cbind(data_w1_na, latent_scores)
+```
+
+## Cross-sectional Analysis
+
+
+### OLSE for Online Political Efficacy
+
+Media Exposure on OPE
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ols_ope <- lm(ope ~ age_num + ses + educ + sex + interest + media + social + franja + poluse + ideo_polarization + affect_polarization, data = data_w1_scores)
+summary(ols_ope)
+
+ols_intef <- lm(intef ~ age_num + ses + educ + sex + interest + media + social + franja + poluse + ideo_polarization + affect_polarization, data = data_w1_scores)
+summary(ols_intef)
+
+ols_extef <- lm(extef ~ age_num + ses + educ + sex + interest + media + social + franja + poluse + ideo_polarization + affect_polarization, data = data_w1_scores)
+summary(ols_extef)
+
+```
+
+
+
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+# Update the extraction function to avoid spaces in names
+get_coef <- function(model, model_name) {
+  coefs <- summary(model)$coefficients
+  data.frame(
+    Term = rownames(coefs),
+    Estimate = coefs[, "Estimate"],
+    Std_Error = coefs[, "Std. Error"],  # Rename to 'Std_Error'
+    Model = model_name
+  )
+}
+
+# Create a mapping of old variable names to new names
+name_mapping <- c(
+  ses = "Socioeconomic Status",
+  sex = "Sex",
+  age_num = "Age",
+  educ = "Education",
+  media = "Traditional Media for Elect. Info.",
+  social = "Social Media for Elect. Info.",
+  franja = "Franja Electoral",
+  interest = "Pol. Interest",
+  extef = "Ext. Efficacy",
+  intef = "Int. Efficacy",
+  ope = "Onl. Efficacy",
+  poluse = "Political Use of Social Media",
+  ideo_polarization = "Ideological Polarization",
+  affect_polarization = "Affective Polarization"
+)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Assuming coef_df is already prepared as per previous instructions
+
+# Apply the function to both models
+coef_ope <- get_coef(ols_ope, "OPE")
+coef_intef <- get_coef(ols_intef, "IPE")
+coef_extef <- get_coef(ols_extef, "EPE")
+
+# Combine the data frames and remove the intercept
+coef_efficacies <- rbind(coef_ope, coef_intef, coef_extef)
+coef_efficacies <- coef_efficacies[!coef_efficacies$Term %in% c("(Intercept)"), ]
+
+
+# Calculate 95% confidence intervals and determine significance
+coef_efficacies <- coef_efficacies %>%
+  mutate(
+    Lower_CI = Estimate - 1.645 * Std_Error,  # Lower bound of the CI
+    Upper_CI = Estimate + 1.645 * Std_Error,  # Upper bound of the CI
+    Significant = if_else(Lower_CI > 0 & Upper_CI > 0 | Lower_CI < 0 & Upper_CI < 0, TRUE, FALSE)  
+    )
+
+
+# Apply the mapping to the dataframe
+coef_efficacies <- coef_efficacies %>%
+  mutate(Term = factor(Term, levels = names(name_mapping), labels = name_mapping))
+
+# Define a dodge width for better separation
+dodge_width <- 0.5
+
+# Create the plot with updated names
+ggplot(coef_efficacies, aes(x = Term, y = Estimate, ymin = Lower_CI, ymax = Upper_CI, color = Model, group = Model)) +
+  geom_pointrange(position = position_dodge(width = dodge_width), aes(size = Significant)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "orange") +
+  theme_minimal() +
+  labs(
+    title = "OLS estimation for Political Efficacies",  # Add your plot title here
+    x = "Variables",
+    y = "Estimated Coefficients"
+  ) +
+  coord_flip() +  # Flips the axes for better visualization of terms
+  scale_color_manual(values = c("darkblue", "darkred", "darkgreen"),
+                     labels = c("EPE", "IPE", "OPE")) +  # Set custom colors for each model
+  scale_size_manual(values = c(0.2, 0.7), guide = FALSE) +  # Adjust line width based on significance
+  theme(
+    legend.position = "right",  # Hide the legend for line size
+    axis.text.y = element_text(size = 8)  # Adjust text size if needed
+  )
+```
+
+
+### Interactions
+
+```{r}
+
+ols_ope_i <- lm(ope ~ age_num + ses + educ + sex + interest + media + social + franja + poluse + ideo_polarization + affect_polarization + social : media, data = data_w1_scores)
+summary(ols_ope_i)
+
+ols_intef_i <- lm(intef ~ age_num + ses + educ + sex + interest + media + social + franja + poluse + ideo_polarization + affect_polarization + social : media, data = data_w1_scores)
+summary(ols_intef_i)
+
+ols_extef_i <- lm(extef ~ age_num + ses + educ + sex + interest + media + social + franja + poluse + ideo_polarization + affect_polarization + social : media, data = data_w1_scores)
+summary(ols_extef_i)
+
+
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+plot1 <- interact_plot(model = ols_ope_i, pred = "social", modx = "media",
+                       interval = TRUE, x.label = "Social Media", y.label = "OPE",
+                       modx.values = "plus-minus",  # plots mean +/- 1 SD of incidental
+                       modx.labels = c("Low Traditional Media", "High Traditional Media"))
+
+plot2 <- interact_plot(model = ols_intef_i, pred = "media", modx = "social",
+                       interval = TRUE, x.label = "Traditional Media", y.label = "IPE",
+                       modx.values = "plus-minus",
+                       modx.labels = c("Low Social Media", "High Social Media"))
+
+
+# Remove the legend title
+
+plot1 + guides(color = guide_legend(title = NULL),
+               fill = guide_legend(title = NULL),
+               linetype = guide_legend(title = NULL))
+
+plot2 + guides(color = guide_legend(title = NULL),
+               fill = guide_legend(title = NULL),
+               linetype = guide_legend(title = NULL))
+
+
+
+
+```

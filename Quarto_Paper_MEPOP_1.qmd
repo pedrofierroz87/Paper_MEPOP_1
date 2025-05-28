@@ -7,7 +7,7 @@ editor: visual
 
 # The Impact of Political Campaigns on Affection: The Case of the First Chilean Constitutional Process (2022)
 
-Authors: Pedro Fierro, Claudia Ramírez, Andrés Sherman, Sebastián Rivera y Magdalena Saldaña
+Authors: Pedro Fierro, Claudia Ramírez, Andrés Sherman y Sebastián Rivera
 
 † Este documento es para compartir ideas y tener acceso al código que estamos ocupando.
 
@@ -15,7 +15,7 @@ Authors: Pedro Fierro, Claudia Ramírez, Andrés Sherman, Sebastián Rivera y Ma
 
 ### Preparing our environment (loading libraries).
 
-```{r results='hide', message=FALSE, warning=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 library(haven)
 library(knitr)
 library(lattice)
@@ -37,7 +37,7 @@ library(semPlot)
 
 ### Importing data and creating variables
 
-```{r  results='hide', message=FALSE, warning=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 #Import Data
 
 data_w1 <- read_sav("Data_W1.sav")
@@ -122,7 +122,7 @@ data_w1$plebint <- data_w1$P23
 
 ### Checking the new variables
 
-```{r message=FALSE, warning=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 describe(data_w1$age_num)
 table(data_w1$ses)
 table(data_w1$educ)
@@ -170,11 +170,13 @@ table(data_w1$plebint)
 
 ```
 
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+
 ## Creating Factors
 
 ### Reliability Test
 
-```{r results='hide', message=FALSE, warning=FALSE}
 cronbach_ope <- alpha(na.omit(data_w1[c("ope1", "ope2", "ope3", "ope4")]))
 cronbach_ope
 
@@ -197,9 +199,11 @@ cronbach_poluse <- alpha(na.omit(data_w1[c("use1", "use2", "use3", "use4", "use5
 cronbach_poluse
 ```
 
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+
 ### Confirmatory Factor Analysis
 
-```{r results='hide', message=FALSE, warning=FALSE}
 data_w1_na <- na.omit(data_w1[c("id", "polint", "procint", "plebint", "ope1", "ope2", "ope3", "ope4", "intef1", "intef2", "intef3", "extef1", "extef2", "extef3", "tv", "cable", "newspaper", "radio", "tradonline", "online", "podcast", "officialsm","fb", "insta", "twitter", "whatsapp", "youtube", "tiktok", "discord", "twitch", "franja", "use1", "use2", "use3", "use4", "use5", "use6", "use7", "age_num", "ses", "sex", "educ")])
 sum(is.na(data_w1_na))
 
@@ -229,97 +233,272 @@ Para estos modelos, debiésemos pensar si incluir o no political interest como c
 
 Media Exposure on OPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_ope1 <- lm(ope ~ age_num + ses + educ + sex + interest + media, data = data_w1_scores)
 summary(ols_ope1)
 ```
 
 Social Media Exposure on OPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_ope2 <- lm(ope ~ age_num + ses + educ + sex + interest + social, data = data_w1_scores)
 summary(ols_ope2)
 ```
 
 Franja Exposure on OPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_ope3 <- lm(ope ~ age_num + ses + educ + sex + interest + franja, data = data_w1_scores)
 summary(ols_ope3)
 ```
 
 Social Media Political Use on OPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_ope4 <- lm(ope ~ age_num + ses + educ + sex + interest + poluse, data = data_w1_scores)
 summary(ols_ope4)
 ```
+
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+# Update the extraction function to avoid spaces in names
+get_coef <- function(model, model_name) {
+  coefs <- summary(model)$coefficients
+  data.frame(
+    Term = rownames(coefs),
+    Estimate = coefs[, "Estimate"],
+    Std_Error = coefs[, "Std. Error"],  # Rename to 'Std_Error'
+    Model = model_name
+  )
+}
+
+# Create a mapping of old variable names to new names
+name_mapping <- c(
+  ses = "Socioeconomic Status",
+  sex = "Sex",
+  age_num = "Age",
+  educ = "Education",
+  media = "Exposure",
+  social = "Exposure",
+  franja = "Exposure",
+  interest = "Pol. Interest",
+  extef = "Ext. Efficacy",
+  intef = "Int. Efficacy",
+  ope = "Onl. Efficacy"
+)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Assuming coef_df is already prepared as per previous instructions
+
+# Apply the function to both models
+coef_ope1 <- get_coef(ols_ope1, "Model 1")
+coef_ope2 <- get_coef(ols_ope2, "Model 2")
+coef_ope3 <- get_coef(ols_ope3, "Model 3")
+
+# Combine the data frames and remove the intercept
+coef_ope <- rbind(coef_ope1, coef_ope2, coef_ope3)
+coef_ope <- coef_ope[!coef_ope$Term %in% c("(Intercept)"), ]
+
+
+# Calculate 95% confidence intervals and determine significance
+coef_ope <- coef_ope %>%
+  mutate(
+    Lower_CI = Estimate - 1.645 * Std_Error,  # Lower bound of the CI
+    Upper_CI = Estimate + 1.645 * Std_Error,  # Upper bound of the CI
+    Significant = if_else(Lower_CI > 0 & Upper_CI > 0 | Lower_CI < 0 & Upper_CI < 0, TRUE, FALSE)  
+    )
+
+
+# Apply the mapping to the dataframe
+coef_ope <- coef_ope %>%
+  mutate(Term = factor(Term, levels = names(name_mapping), labels = name_mapping))
+
+# Define a dodge width for better separation
+dodge_width <- 0.5
+
+# Create the plot with updated names
+ggplot(coef_ope, aes(x = Term, y = Estimate, ymin = Lower_CI, ymax = Upper_CI, color = Model, group = Model)) +
+  geom_pointrange(position = position_dodge(width = dodge_width), aes(size = Significant)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "orange") +
+  theme_minimal() +
+  labs(
+    title = "OLS estimation for Online Efficacy",  # Add your plot title here
+    x = "Variables",
+    y = "Estimated Coefficients"
+  ) +
+  coord_flip() +  # Flips the axes for better visualization of terms
+  scale_color_manual(values = c("darkblue", "darkred", "darkgreen"),
+                     labels = c("Media", "Social Media", "Franja")) +  # Set custom colors for each model
+  scale_size_manual(values = c(0.5, 1.5), guide = FALSE) +  # Adjust line width based on significance
+  theme(
+    legend.position = "right",  # Hide the legend for line size
+    axis.text.y = element_text(size = 8)  # Adjust text size if needed
+  )
+```
+
 
 ### OLSE for Internal Efficacy
 
 Media Exposure on IPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_intef1 <- lm(intef ~ age_num + ses + educ + sex + interest + media, data = data_w1_scores)
 summary(ols_intef1)
 ```
 
 Social Media Exposure on IPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_intef2 <- lm(intef ~ age_num + ses + educ + sex + interest + social, data = data_w1_scores)
 summary(ols_intef2)
 ```
 
 Franja Exposure on IPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_intef3 <- lm(intef ~ age_num + ses + educ + sex + interest + franja, data = data_w1_scores)
 summary(ols_intef3)
 ```
 
 Social Media Political Use on IPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_intef4 <- lm(intef ~ age_num + ses + educ + sex + interest + poluse, data = data_w1_scores)
 summary(ols_intef4)
 ```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Apply the function to both models
+coef_intef1 <- get_coef(ols_intef1, "Model 1")
+coef_intef2 <- get_coef(ols_intef2, "Model 2")
+coef_intef3 <- get_coef(ols_intef3, "Model 3")
+
+# Combine the data frames and remove the intercept
+coef_intef <- rbind(coef_intef1, coef_intef2, coef_intef3)
+coef_intef <- coef_intef[!coef_intef$Term %in% c("(Intercept)"), ]
+
+
+# Calculate 95% confidence intervals and determine significance
+coef_intef <- coef_intef %>%
+  mutate(
+    Lower_CI = Estimate - 1.645 * Std_Error,  # Lower bound of the CI
+    Upper_CI = Estimate + 1.645 * Std_Error,  # Upper bound of the CI
+    Significant = if_else(Lower_CI > 0 & Upper_CI > 0 | Lower_CI < 0 & Upper_CI < 0, TRUE, FALSE)  
+    )
+
+
+# Apply the mapping to the dataframe
+coef_intef <- coef_intef %>%
+  mutate(Term = factor(Term, levels = names(name_mapping), labels = name_mapping))
+
+# Define a dodge width for better separation
+dodge_width <- 0.5
+
+# Create the plot with updated names
+ggplot(coef_intef, aes(x = Term, y = Estimate, ymin = Lower_CI, ymax = Upper_CI, color = Model, group = Model)) +
+  geom_pointrange(position = position_dodge(width = dodge_width), aes(size = Significant)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "orange") +
+  theme_minimal() +
+  labs(
+    title = "OLS estimation for Internal Efficacy",  # Add your plot title here
+    x = "Variables",
+    y = "Estimated Coefficients"
+  ) +
+  coord_flip() +  # Flips the axes for better visualization of terms
+  scale_color_manual(values = c("darkblue", "darkred", "darkgreen"),
+                     labels = c("Media", "Social Media", "Franja")) +  # Set custom colors for each model
+  scale_size_manual(values = c(0.5, 1.5), guide = FALSE) +  # Adjust line width based on significance
+  theme(
+    legend.position = "right",  # Hide the legend for line size
+    axis.text.y = element_text(size = 8)  # Adjust text size if needed
+  )
+```
+
 
 ### OLSE for External Efficacy
 
 Media Exposure on EPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_extef1 <- lm(extef ~ age_num + ses + educ + sex + interest + media, data = data_w1_scores)
 summary(ols_extef1)
 ```
 
 Social Media Exposure on EPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_extef2 <- lm(extef ~ age_num + ses + educ + sex + interest + social, data = data_w1_scores)
 summary(ols_extef2)
 ```
 
 Franja Exposure on EPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_extef3 <- lm(extef ~ age_num + ses + educ + sex + interest + franja, data = data_w1_scores)
 summary(ols_extef3)
 ```
 
 Social Media Political Use on EPE
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ols_extef4 <- lm(extef ~ age_num + ses + educ + sex + interest + poluse, data = data_w1_scores)
 summary(ols_extef4)
 ```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Apply the function to both models
+coef_extef1 <- get_coef(ols_extef1, "Model 1")
+coef_extef2 <- get_coef(ols_extef2, "Model 2")
+coef_extef3 <- get_coef(ols_extef3, "Model 3")
+
+# Combine the data frames and remove the intercept
+coef_extef <- rbind(coef_extef1, coef_extef2, coef_extef3)
+coef_extef <- coef_extef[!coef_extef$Term %in% c("(Intercept)"), ]
+
+
+# Calculate 95% confidence intervals and determine significance
+coef_extef <- coef_extef %>%
+  mutate(
+    Lower_CI = Estimate - 1.645 * Std_Error,  # Lower bound of the CI
+    Upper_CI = Estimate + 1.645 * Std_Error,  # Upper bound of the CI
+    Significant = if_else(Lower_CI > 0 & Upper_CI > 0 | Lower_CI < 0 & Upper_CI < 0, TRUE, FALSE)  
+    )
+
+
+# Apply the mapping to the dataframe
+coef_extef <- coef_extef %>%
+  mutate(Term = factor(Term, levels = names(name_mapping), labels = name_mapping))
+
+# Define a dodge width for better separation
+dodge_width <- 0.5
+
+# Create the plot with updated names
+ggplot(coef_extef, aes(x = Term, y = Estimate, ymin = Lower_CI, ymax = Upper_CI, color = Model, group = Model)) +
+  geom_pointrange(position = position_dodge(width = dodge_width), aes(size = Significant)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "orange") +
+  theme_minimal() +
+  labs(
+    title = "OLS estimation for External Efficacy",  # Add your plot title here
+    x = "Variables",
+    y = "Estimated Coefficients"
+  ) +
+  coord_flip() +  # Flips the axes for better visualization of terms
+  scale_color_manual(values = c("darkblue", "darkred", "darkgreen"),
+                     labels = c("Media", "Social Media", "Franja")) +  # Set custom colors for each model
+  scale_size_manual(values = c(0.5, 1.5), guide = FALSE) +  # Adjust line width based on significance
+  theme(
+    legend.position = "right",  # Hide the legend for line size
+    axis.text.y = element_text(size = 8)  # Adjust text size if needed
+  )
+```
+
+
+
 
 ## Longitudinal Approach
 
 ### Importing data and creating variables
 
-```{r results='hide', message=FALSE, warning=FALSE}
+```{r  echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 #Import Data
 data_w3 <- read_sav("Data_W3.sav")
 
@@ -374,7 +553,7 @@ data_w3$intef3 <- data_w3$P58_6
 
 ### Checking the new variables
 
-```{r message=FALSE, warning=FALSE}
+```{r  echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 describe(data_w3$age_num)
 table(data_w3$ses)
 table(data_w3$SEX)
@@ -399,7 +578,7 @@ table(data_w3$intef3)
 
 ### Creating Long Dataset
 
-```{r results='hide', message=FALSE, warning=FALSE}
+```{r  echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # Subset the necessary variables
 data_w1_selec <- data_w1 %>% select(id, ope1, ope2, ope3, ope4, intef1, intef2, intef3, extef1, extef2, extef3, use1, use2, use3, use4, use5, use6, use7, sex, ses, age_num, ideology)
 
@@ -428,7 +607,7 @@ table(data_long$wave)
 
 ## Reliability Test for Long Dataset
 
-```{r results='hide', message=FALSE, warning=FALSE}
+```{r  echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 cronbach_ope_long <- alpha(na.omit(data_long[c("ope1", "ope2", "ope3", "ope4")]))
 cronbach_ope_long
 
@@ -444,7 +623,7 @@ cronbach_poluse_long
 
 ### Creating Latent Variables for Long Dataset
 
-```{r results='hide', message=FALSE, warning=FALSE}
+```{r  echo=FALSE, message=FALSE, warning=FALSE}
 data_long <- data_long %>%
   mutate(across(where(is.labelled), as.numeric))
 
@@ -467,7 +646,7 @@ semPaths(fit_cfa_long, "std", layout = "tree", rotation = 2,
 
 ### Converting to Panel Dataset
 
-```{r results='hide', message=FALSE, warning=FALSE}
+```{r  echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # Convert your data to a panel data frame
 pdata <- pdata.frame(data_long_scores, index = c("id", "wave"))
 ```
@@ -492,6 +671,17 @@ print(hausman_test_ope)
 # Summary of the random effects model
 summary(model_re_ope)
 
+# Extract R-squared values
+model_re_ope_r2_overall  <- summary(model_re_ope)$r.squared["rsq"]
+model_re_ope_r2_within   <- summary(plm(ope ~ poluse + ideology + ses + sex + age_num, data = pdata, model = "within"))$r.squared["rsq"]
+model_re_ope_r2_between  <- summary(plm(ope ~ poluse + ideology + ses + sex + age_num, data = pdata, model = "between"))$r.squared["rsq"]
+
+# Print results
+print(paste("Overall R²:", model_re_ope_r2_overall))
+print(paste("Within R²:", model_re_ope_r2_within))
+print(paste("Between R²:", model_re_ope_r2_between))
+
+
 ```
 
 ### Panel Regression for IPE
@@ -514,6 +704,16 @@ print(hausman_test_intef)
 # Summary of the random effects model
 summary(model_fe_intef)
 
+# Extract R-squared values
+model_fe_intef_r2_within  <- summary(model_fe_intef)$r.squared["rsq"]
+model_fe_intef_r2_overall <- summary(plm(intef ~ poluse + ideology + ses + sex + age_num, data = pdata, model = "pooling"))$r.squared["rsq"]
+model_fe_intef_r2_between <- summary(plm(intef ~ poluse + ideology + ses + sex + age_num, data = pdata, model = "between"))$r.squared["rsq"]
+
+# Print results
+print(paste("Within R²:", model_fe_intef_r2_within))
+print(paste("Overall R²:", model_fe_intef_r2_overall))
+print(paste("Between R²:", model_fe_intef_r2_between))
+
 ```
 
 ### Panel Regression for EPE
@@ -535,6 +735,16 @@ print(hausman_test_extef)
 
 # Summary of the random effects model
 summary(model_re_extef)
+
+# Extract R-squared values
+model_re_extef_r2_overall  <- summary(model_re_extef)$r.squared["rsq"]
+model_re_extef_r2_within   <- summary(plm(extef ~ poluse + ideology + ses + sex + age_num, data = pdata, model = "within"))$r.squared["rsq"]
+model_re_extef_r2_between  <- summary(plm(extef ~ poluse + ideology + ses + sex + age_num, data = pdata, model = "between"))$r.squared["rsq"]
+
+# Print results
+print(paste("Overall R²:", model_re_extef_r2_overall))
+print(paste("Within R²:", model_re_extef_r2_within))
+print(paste("Between R²:", model_re_extef_r2_between))
 
 ```
 
@@ -599,6 +809,45 @@ data_long_complete_scores <- cbind(data_long_complete, latent_scores_long_comple
 pdata_complete <- pdata.frame(data_long_complete_scores, index = c("id", "wave"))
 
 ```
+
+```{r}
+# Function to compute overall, within, and between standard deviations
+compute_sd_components <- function(data, var) {
+  sd_overall <- sd(data[[var]], na.rm = TRUE)  # Overall std dev
+  
+  # Compute Between standard deviation
+  var_mean_i <- data %>%
+    group_by(id) %>%
+    summarise(var_mean = mean(.data[[var]], na.rm = TRUE))  # Individual means
+  
+  sd_between <- sd(var_mean_i$var_mean, na.rm = TRUE)  # Between std dev
+  
+  # Compute Within standard deviation
+  var_demeaned <- data %>%
+    group_by(id) %>%
+    mutate(var_within = .data[[var]] - mean(.data[[var]], na.rm = TRUE))  # Demeaned within
+  
+  sd_within <- sd(var_demeaned$var_within, na.rm = TRUE)  # Within std dev
+  
+  return(c(Overall = sd_overall, Between = sd_between, Within = sd_within))
+}
+
+# Compute standard deviations for each variable
+sd_ope <- compute_sd_components(pdata_complete, "ope")
+sd_intef <- compute_sd_components(pdata_complete, "intef")
+sd_extef <- compute_sd_components(pdata_complete, "extef")
+
+# Print results
+sd_results <- data.frame(
+  Variable = c("ope", "intef", "extef"),
+  Overall_SD = c(sd_ope["Overall"], sd_intef["Overall"], sd_extef["Overall"]),
+  Between_SD = c(sd_ope["Between"], sd_intef["Between"], sd_extef["Between"]),
+  Within_SD = c(sd_ope["Within"], sd_intef["Within"], sd_extef["Within"])
+)
+
+print(sd_results)
+```
+
 
 Panel Regressions OPE
 
